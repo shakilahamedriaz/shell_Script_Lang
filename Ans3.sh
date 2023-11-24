@@ -1,25 +1,28 @@
-# Hello World Program in Bash Shell
-
 #!/bin/bash
 
-# Initialize variables
-sum=0
-count=0
+# Function for calculating the average of an array
+calculate_average() {
+    local sum=0
+    local count=0
 
-# Read floating-point numbers from the user
-echo "Enter floating point numbers : "
-while read -r num; do
-    # Validate input
-    if [[ ! $num =~ ^[0-9]+\.[0-9]+$ ]]; then
-        echo "Invalid input: '$num'. Please enter a valid floating-point number."
-        continue
-    fi
+    for num in "${numbers[@]}"; do
+        sum=$(echo "$sum + $num" | bc)
+        count=$((count + 1))
+    done
 
-    # Accumulate sum and count
-    sum=$(echo "$sum + $num" | bc)
-    count=$((count + 1))
-done
+    average=$(echo "scale=$precision; $sum / $count" | bc)
+    echo "Average with precision $precision: $average"
+}
 
-# Calculate average and display the result
-average=$(echo "$sum / $count" | bc -l)
-echo "Average: $average"
+# Prompt the user to enter the floating-point numbers
+echo "Enter the floating-point numbers separated by spaces:"
+read input
+# Replace spaces with line breaks and store in the array
+numbers=($(echo "$input" | tr ' ' '\n'))
+
+# Prompt the user to enter the precision for the average
+echo "Enter the precision for the average (number of decimal places):"
+read precision
+
+# Call the function to calculate and display the average
+calculate_average
