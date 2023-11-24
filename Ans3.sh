@@ -1,3 +1,5 @@
+# Save the script in a file, for example, calculate_average.sh
+
 #!/bin/bash
 
 # Function for calculating the average of an array
@@ -16,13 +18,13 @@ calculate_average() {
 
 # Prompt the user to enter the floating-point numbers
 echo "Enter the floating-point numbers separated by spaces:"
-read input
+read -r input
 # Replace spaces with line breaks and store in the array
 numbers=($(echo "$input" | tr ' ' '\n'))
 
 # Prompt the user to enter the precision for the average
 echo "Enter the precision for the average (number of decimal places):"
-read precision
+read -r precision
 
 # Call the function to calculate and display the average
 calculate_average
